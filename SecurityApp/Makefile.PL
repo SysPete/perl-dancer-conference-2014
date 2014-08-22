@@ -9,17 +9,19 @@ $eumm_version =~ s/_//;
 
 WriteMakefile(
     NAME                => 'SecurityApp',
-    AUTHOR              => q{YOUR NAME <youremail@example.com>},
+    AUTHOR              => q{Peter Mottram (SysPete) <peter@sysnix.com>},
     VERSION_FROM        => 'lib/SecurityApp.pm',
-    ABSTRACT            => 'YOUR APPLICATION ABSTRACT',
+    ABSTRACT            => 'code for security talk demos',
     ($eumm_version >= 6.3001
       ? ('LICENSE'=> 'perl')
       : ()),
     PL_FILES            => {},
     PREREQ_PM => {
-        'Test::More' => 0,
-        'YAML'       => 0,
-        'Dancer'     => 1.3126,
+        'Plack'       => 1.0031,
+        'Test::More'  => 0,
+        'Test::Roo'   => 1.004,
+        'YAML'        => 0,
+        'Dancer'      => 1.3126,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'SecurityApp-*' },
