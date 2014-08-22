@@ -1,4 +1,5 @@
 appname: "SecurityApp"
+
 layout: "main"
 charset: "UTF-8"
 template: "simple"
