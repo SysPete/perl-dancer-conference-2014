@@ -147,6 +147,29 @@
 
 <section>
 
+  <h3>Features</h3>
+  <ul>
+    <li class="fragment roll-in">Extends DBIx::Class::Schema::Versioned</li>
+    <li class="fragment roll-in">Extensive use of SQL::Translator</li>
+    <li class="fragment roll-in">Version definition stored in schema</li>
+    <li class="fragment roll-in">No DDL diff files</li>
+    <li class="fragment roll-in">Perl scripts</li>
+    <li class="fragment roll-in">One file stores all upgrade data changes</li>
+    <li class="fragment roll-in">No downgrades (yet)</li>
+    <li class="fragment roll-in">No validation (yet)</li>
+  </ul>
+
+  <aside class="notes">
+    1 sql file per upgrade per database engine<br>
+    only sql so can't use power of DBIC<br>
+    'use DH' - the response I received when I 1st mentioned it on IRC
+  </aside>
+
+</section>
+
+
+<section>
+
   <h2>MyApp::Schema</h2>
 
   <h4>Without versioning</h4>
@@ -190,6 +213,8 @@ __PACKAGE__->load_namespaces();
 <section>
 
   <h2>Candy</h2>
+
+  <p>Mix in some DBIx::Class::Candy goodness with some ::Versioned::Inline::Candy</p>
 
   <pre><code class="perl" data-trim contenteditable>
 
@@ -268,8 +293,6 @@ __PACKAGE__->set_primary_key('foos_id');
 <section>
 
   <h2>since with Candy</h2>
-
-  <p>Mix in some DBIx::Class::Candy goodness with some ::Versioned::Inline::Candy</p>
 
   <pre><code class="perl" data-trim contenteditable>
 
@@ -471,6 +494,28 @@ column bar => {
 };
 
   </code></pre>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+
+<section>
+
+  <h2>Upgrades</h2>
+
+  <br>
+  <p>DBIx::Class::Schema::Versioned::Inline::Upgrade</p>
+  <br>
+
+  <div class="fragment roll-in">
+  <h4>Exports</h4>
+  <ul>
+   <li>before</li>
+   <li>after</li>
+  </ul>
+  </div>
 
   <aside class="notes">
   </aside>
