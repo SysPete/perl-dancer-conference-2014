@@ -1,0 +1,504 @@
+
+<section>
+
+  <h2>A new versioned schema for DBIx::Class</h2>
+  <h4>Peter Mottram (SysPete) &lt;peter@sysnix.com&gt;</h4>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+
+<section>
+
+  <h2>Why version our schema?</h2>
+  <ul>
+    <li class="fragment">Deploy specific version</li>
+    <li class="fragment">Upgrades</li>
+    <li class="fragment">Downgrades</li>
+    <li class="fragment">Validation</li>
+  </ul>
+
+  <aside class="notes">
+    Deploy: easily deploy a specific schema version<br>
+    Upgrades: new tables, renamed columns, type changes, etc<br>
+    Downgrades: backout change<br>
+    Validation: does our schema match what we are expecting?
+  </aside>
+
+</section>
+
+
+<section>
+
+  <section>
+
+    <h2>Existing solutions</h2>
+    <ul>
+      <li><a href="https://metacpan.org/pod/DBIx::Class::Schema::Versioned">DBIx::Class::Schema::Versioned</a></li>
+      <li><a href="https://metacpan.org/pod/DBIx::Class::DeploymentHandler">DBIx::Class::DeploymentHandler</a></li>
+      <li><a href="https://metacpan.org/pod/DBIx::Class::Migration">DBIx::Class::Migration</a></li>
+    </ul>
+
+    <aside class="notes">
+    Non-DBIC solutions exist but we're only interested in DBIC
+
+    NOTE: down for next slide
+    </aside>
+
+  </section>
+
+  <section>
+
+    <h3>DBIx::Class::Schema::Versioned</h3>
+    <ul>
+      <li class="fragment roll-in">Part of DBIx::Class distro</li>
+      <li class="fragment roll-in">Uses DDL diff files</li>
+      <li class="fragment roll-in">One sql file per upgrade/db engine</li>
+      <li class="fragment roll-in">No downgrades</li>
+      <li class="fragment roll-in">No Perl scripts allowed</li>
+      <li class="fragment roll-in"><q>Use DH instead</q></li>
+    </ul>
+
+    <aside class="notes">
+      1 sql file per upgrade per database engine<br>
+      only sql so can't use power of DBIC<br>
+      'use DH' - the response I received when I 1st mentioned it on IRC
+    </aside>
+
+  </section>
+
+  <section>
+
+    <h3>DBIx::Class::DeploymentHandler</h3>
+    <ul>
+      <li class="fragment roll-in">Not part of DBIx::Class distro</li>
+      <li class="fragment roll-in">Much more powerful than ::Schema::Versioned</li>
+      <li class="fragment roll-in">Downgrades in addition to upgrades</li>
+      <li class="fragment roll-in">Multiple sql files files per upgrade/downgrade/install</li>
+      <li class="fragment roll-in">Perl scripts allowed for upgrade/downgrade/install</li>
+      <li class="fragment roll-in">Logging</li>
+      <li class="fragment roll-in">Population</li>
+      <li class="fragment roll-in">Large footprint (Moose!)</li>
+    </ul>
+
+    <aside class="notes">
+      script can log fatal, error, warn, info, debug, trace set via ENV</br>
+      population at any version</br>
+    </aside>
+
+  </section>
+
+  <section>
+
+    <h3>DBIx::Class::Migration</h3>
+    <ul>
+      <li class="fragment roll-in">Not part of DBIx::Class distro</li>
+      <li class="fragment roll-in">Extends ::DeploymentHandler</li>
+      <li class="fragment roll-in">Downgrades in addition to upgrades</li>
+      <li class="fragment roll-in">Multiple sql files files per upgrade/downgrade/install</li>
+      <li class="fragment roll-in">Perl scripts allowed for upgrade/downgrade/install</li>
+      <li class="fragment roll-in">DBIx::Class::Fixtures</li>
+      <li class="fragment roll-in">Testing (<a href="https://metacpan.org/pod/DBIx::Class::Migration::Features#Testing">Test::DBIx::Class</a>)</li>
+      <li class="fragment roll-in">Standard workflows with supplied scripts</li>
+      <li class="fragment roll-in">Extensive documentation</li>
+      <li class="fragment roll-in">Larger footprint that DH</li>
+      <li class="fragment roll-in">More rigid than DH</li>
+    </ul>
+
+    <aside class="notes">
+      integrates with testing tools like Test::DBIx::Class<br>
+      Might be difficult to introduce into existing large &amp; complex project
+    </aside>
+
+  </section>
+
+</section>
+
+
+<section>
+
+  <h2>A new versioned schema for DBIx::Class</h2>
+  <h4 class="fragment"><a href="https://metacpan.org/pod/DBIx::Class::Schema::Versioned::Inline">DBIx::Class::Schema::Versioned::Inline</a></h4>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+
+<section>
+
+  <h2>Why?</h2>
+
+  <ul>
+    <li class="fragment">I'm a Perl hacker - I don't want to mess with SQL</li>
+    <li class="fragment">I want to see my version info within the schema definition</li>
+    <li class="fragment">I don't want to have to carry around piles of schema diffs</li>
+    <li class="fragment">Seemed like a good idea at the time</li>
+  </ul>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+
+<section>
+
+  <h2>MyApp::Schema</h2>
+
+  <h4>Without versioning</h4>
+
+  <pre><code class="perl" data-trim contenteditable>
+
+package MyApp::Schema;
+
+use base 'DBIx::Class::Schema';
+
+our $VERSION = '0.001';
+
+__PACKAGE__->load_namespaces();
+
+1;
+
+  </code></pre>
+
+  <h4>With versioning</h4>
+
+  <pre><code class="perl" data-trim contenteditable>
+
+package MyApp::Schema;
+
+use base 'DBIx::Class::Schema::Versioned::Inline';
+
+our $VERSION = '0.001';
+
+__PACKAGE__->load_namespaces();
+
+1;
+
+  </code></pre>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+
+<section>
+
+  <h2>Candy</h2>
+
+  <pre><code class="perl" data-trim contenteditable>
+
+package TestCandy::Schema::Candy;
+
+use base 'DBIx::Class::Candy';
+
+sub base { $_[1] || 'DBIx::Class::Core' }
+
+sub autotable { 1 }
+
+sub parse_arguments {
+    my $self = shift;
+    my $args = $self->next::method(@_);
+    push @{$args->{components}}, 'Schema::Versioned::Inline::Candy';
+    return $args;
+}
+
+1;
+
+  </code></pre>
+</section>
+
+
+<section>
+
+  <h2>Schema definition</h2>
+
+  <ul>
+   <li>versioned</li>
+   <li>since</li>
+   <li>until (till)</li>
+   <li>renamed_from</li>
+   <li>changes</li>
+  </ul>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+
+<section>
+
+  <h2>since</h2>
+
+  <p>Specifies the first version at which a table, column or relationship exists</p>
+
+  <pre><code class="perl" data-trim contenteditable>
+
+package MyApp::Schema::Result::Foo;
+use base 'DBIx::Class::Core';
+
+__PACKAGE__->resultset_attributes({ versioned => { since => '0.002' } });
+
+__PACKAGE__->add_columns(
+    foos_id => { data_type => 'integer', is_auto_increment => 1 },
+    name => { data_type => 'text' },
+    bar => { data_type => 'integer', versioned => { since => '0.003' } },
+);
+
+__PACKAGE__->has_many(
+    thingies => 'MyApp::Schema::Result::Thingy', foos_id,
+    { versioned => { since => '0.003' }
+);
+
+__PACKAGE__->set_primary_key('foos_id');
+
+  </code></pre>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+<section>
+
+  <h2>since with Candy</h2>
+
+  <p>Mix in some DBIx::Class::Candy goodness with some ::Versioned::Inline::Candy</p>
+
+  <pre><code class="perl" data-trim contenteditable>
+
+package MyApp::Schema::Result::Foo;
+use MyApp::Schema::Candy;
+
+since '0.002';
+
+primary_column
+    foos_id => { data_type => 'integer', is_auto_increment => 1 };
+column name => { data_type => 'text' };
+column bar  => { data_type => 'integer', since => '0.003' };
+
+has_many
+    thingies => 'MyApp::Schema::Result::Thingy', foos_id,
+    since => '0.003';
+
+  </code></pre>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+
+<section>
+
+  <h2>until</h2>
+
+  <p>Specifies the first version at which a table, column or relationship no longer exists</p>
+
+  <pre><code class="perl" data-trim contenteditable>
+
+package MyApp::Schema::Result::Foo;
+use base 'DBIx::Class::Core';
+
+__PACKAGE__->resultset_attributes({ versioned => { until => '0.05' } });
+
+__PACKAGE__->add_columns(
+    foos_id => { data_type => 'integer', is_auto_increment => 1 },
+    name => { data_type => 'text' },
+    bar => { data_type => 'integer', versioned => { until => '0.04' } },
+);
+
+__PACKAGE__->has_many(
+    thingies => 'MyApp::Schema::Result::Thingy', foos_id,
+    { versioned => { until => '0.04' }
+);
+
+__PACKAGE__->set_primary_key('foos_id');
+
+  </code></pre>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+<section>
+
+  <h2>until with Candy</h2>
+
+Note: <code>until</code> candy for class is named <code>till</code>
+
+  <pre><code class="perl" data-trim contenteditable>
+
+package MyApp::Schema::Result::Foo;
+use MyApp::Schema::Candy;
+
+till '0.05';
+
+primary_column
+    foos_id => { data_type => 'integer', is_auto_increment => 1 };
+column name => { data_type => 'text' };
+column bar  => { data_type => 'integer', until => '0.04' };
+
+has_many
+    thingies => 'MyApp::Schema::Result::Thingy', foos_id,
+    until => '0.004';
+
+  </code></pre>
+
+  <aside class="notes">
+   Note: till instead of until for class.
+  </aside>
+
+</section>
+
+
+<section>
+
+  <h2>renamed_from</h2>
+  <p>tables and columns only - NOT relationships</p>
+
+  <pre><code class="perl" data-trim contenteditable>
+
+package MyApp::Schema::Result::Foo;
+use base 'DBIx::Class::Core';
+__PACKAGE__->table('foos');
+__PACKAGE__->resultset_attributes({ versioned => { until => '0.05' } });
+
+package MyApp::Schema::Result::Bar;
+use base 'DBIx::Class::Core';
+__PACKAGE__->table('bars');
+__PACKAGE__->resultset_attributes(
+    { versioned => { since => '0.05', renamed_from => 'foos' } });
+
+__PACKAGE__->add_columns(
+    bar  => { data_type => 'integer', versioned => { until => '0.6' } },
+    biff => { data_type => 'integer', default_value => 42,
+              versioned => { since => '0.6', renamed_from => 'bar' } },
+);
+
+  </code></pre>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+<section>
+
+  <h2>renamed_from with Candy</h2>
+  <pre><code class="perl" data-trim contenteditable>
+
+package MyApp::Schema::Result::Foo;
+use MyApp::Schema::Candy;
+
+till '0.05';
+
+package MyApp::Schema::Result::Bar;
+use MyApp::Schema::Candy;
+
+since '0.05';
+renamed_from 'Foo';
+
+column bar  => { data_type => 'integer', until => '0.6' };
+column biff => { data_type => 'integer', default_value => 42,
+                 since => '0.6', renamed_from => 'bar' };
+  </code></pre>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+<section>
+
+  <h2>changes</h2>
+
+  <p>columns only</p>
+
+  <pre><code class="perl" data-trim contenteditable>
+
+__PACKAGE__->add_columns(
+    bar => {
+        data_type => 'integer',
+        versioned => {
+            since     => '0.04',
+            changes   => {
+                '0.07' => { data_type => 'integer', default_value => 0 },
+                '0.10' => { data_type => 'integer', default_value => 8 },
+                '0.12' => {
+                    data_type     => 'integer',
+                    default_value => 8,
+                    is_nullable   => 0,
+                },
+            }
+        }
+    }
+};
+
+  </code></pre>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+
+<section>
+
+  <h2>changes with Candy</h2>
+
+  <pre><code class="perl" data-trim contenteditable>
+
+column bar => {
+    data_type => 'integer',
+    since     => '0.04',
+    changes   => {
+        '0.07' => { data_type => 'integer', default_value => 0 },
+        '0.10' => { data_type => 'integer', default_value => 8 },
+        '0.12' => {
+            data_type     => 'integer',
+            default_value => 8,
+            is_nullable   => 0,
+        },
+    }
+};
+
+  </code></pre>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+
+<section>
+
+  <h2></h2>
+
+  <pre><code data-trim contenteditable>
+  </code></pre>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+
+
+<section>
+
+  <h2>Questions?</h2>
+  <h4>Peter Mottram (SysPete) &lt;peter@sysnix.com&gt;</h4>
+
+  <aside class="notes">
+    check time remaining!
+  </aside>
+
+</section>
+
