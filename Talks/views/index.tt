@@ -2,6 +2,7 @@
 <section>
   <h1>Talks</h1>
   <h2><a href="/versioned_schema">A new versioned schema for DBIx::Class</a></h2>
+  <h2><a href="/security">Securing your Dancer app: keeping out the bad guys</a></h2>
   <h4>Peter Mottram (SysPete) &lt;peter@sysnix.com&gt;</h4>
   <aside class="notes">
   </aside>

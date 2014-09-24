@@ -1,0 +1,229 @@
+<section>
+  <section>
+
+    <h1>Securing your Dancer app</h1>
+    <h2>keeping out the bad guys</h2>
+    <h4>Peter Mottram (SysPete) &lt;peter@sysnix.com&gt;</h4>
+
+    <aside class="notes">
+    </aside>
+
+  </section>
+
+  <section>
+
+    <h2>About me</h2>
+
+    <ul>
+      <li>Lived and worked in UK, Netherlands and Malta</li>
+      <li>24 years UNIX &amp; Linux systems</li>
+      <li>freelance Linux, network security and Perl</li>
+      <li>Interchange6 development team member</li>
+    </ul>
+  </section>
+
+  <section>
+  <img src="/images/mt_large_locator.gif">
+
+  <p>"slightly less than twice the size of Washington, DC"</p>
+  <p>&copy; CIA World Fact Book</p>
+  </section>
+</section>
+
+<section>
+ <section>
+  <h1>A short history of network<br> security</h1>
+  <h2 class="fragment">(where did it all go wrong?)</h2>
+ </section>
+ <section>
+  <h1>Early Internet</h1>
+  <h2>The Wild West</h2>
+  <img class="noborder" src="/images/internet1.png">
+ </section>
+ <section>
+  <h1>We begin to learn</h1>
+  <h2>Stateless filtering with routers</h2>
+  <img class="noborder" src="/images/internet2.png">
+ </section>
+ <section>
+  <h1>Firewalls</h1>
+  <h2>Stateful filtering</h2>
+  <img class="noborder" src="/images/internet3.png">
+ </section>
+ <section>
+  <h1>DMZ</h1>
+  <h2>Starting to get fancy</h2>
+  <img class="noborder" src="/images/internet4.png">
+ </section>
+ <section>
+  <h1>Paranoid</h1>
+  <h2>Multiple layers</h2>
+  <img class="noborder" src="/images/internet5.png">
+ </section>
+ <section>
+  <h1>The Cloud</h1>
+  <img class="noborder" src="/images/internet1.png">
+ </section>
+</section>
+
+<section>
+<h1>Security</h1>
+<h2>Finding the right balance</h2>
+<ul class="fragment roll-in">
+<li>Security requirements</li>
+<li>Cost versus budget</li>
+</ul>
+<ul class="fragment roll-in">
+<li>Impact on users</li>
+<li>Motivations of attacker</li>
+</ul>
+</section>
+
+<section>
+<section>
+<h1>Attackers</h1>
+<img class="fragment" src="/images/shark.jpg">
+</section>
+<section>
+<h1>Attackers</h1>
+<ul>
+<li>Disgruntled staff or developers</li>
+<li>"Drive by" attacks: viruses, worms, trojans</li>
+<li>Motivated criminal attackers: organised crime</li>
+<li>Criminal attackers without motive against you</li>
+<li>Script kiddies</li>
+</ul>
+
+ <aside class="notes">
+2 side effects or direct consequences of<br>
+4 or your organisation, defacers<br>
+ </aside>
+</section>
+</section>
+
+<section>
+<h1>Don't trust the network!</h1>
+<ul>
+<li>Eavesdropping</li>
+<li>Tampering</li>
+<li>Spoofing</li>
+<li>Hijacking</li>
+<li>Observing</li>
+<li>Brute force</li>
+</ul>
+
+<aside class="notes">
+Assume the network is compromised!<br>
+1 even with crypto might be poss: mitm  2 change data on the wire even if encrypted. Thwarted my msg auth (SSL/TLS). 3 forged from different source IP. 4 extension of spoofing - use MAC (SSL/TLS). 5 two hosts communicating, timing of traffic<br>
+</aside>
+</section>
+
+<section>
+<h1></h1>
+<h2></h2>
+<ul>
+<li></li>
+</ul>
+<aside class="notes">
+</aside>
+</section>
+
+<section>
+  <h2>Crypt::PBKDF2 timings</h2>
+  <h3>16K iterations</h3>
+  <table>
+   <thead>
+    <tr><th>Characters</th><th>x1</th><th>x100</th></tr>
+   </thead>
+   <tbody>
+    <tr><td> 30    </td><td> 0.051 secs </td><td> 5.1 secs   </td></tr>
+    <tr><td> 300   </td><td> 0.073 secs </td><td> 7.3 secs   </td></tr>
+    <tr><td> 3K    </td><td> 0.206 secs </td><td> 20.6 secs  </td></tr>
+    <tr><td> 30K   </td><td> 1.386 secs </td><td> 2.22 mins  </td></tr>
+    <tr><td> 300K  </td><td> 13.38 secs </td><td> 22.3 mins  </td></tr>
+    <tr><td> 3M    </td><td> 2.22 mins  </td><td> 3.7 hours  </td></tr>
+    <tr><td> 30M   </td><td> 22.3 mins  </td><td> 37  hours  </td></tr>
+    <tr><td> 300M  </td><td> 3.7 hours  </td><td> 15 days    </td></tr>
+   </tbody>
+  </table>
+</section>
+
+<section>
+<h1></h1>
+<h2></h2>
+<ul>
+<li></li>
+</ul>
+<aside class="notes">
+</aside>
+</section>
+
+<section>
+<h1></h1>
+<h2></h2>
+<ul>
+<li></li>
+</ul>
+<aside class="notes">
+</aside>
+</section>
+
+<section>
+<h1></h1>
+<h2></h2>
+<ul>
+<li></li>
+</ul>
+<aside class="notes">
+</aside>
+</section>
+
+<section>
+<h1></h1>
+<h2></h2>
+<ul>
+<li></li>
+</ul>
+<aside class="notes">
+</aside>
+</section>
+
+<section>
+<h1></h1>
+<h2></h2>
+<ul>
+<li></li>
+</ul>
+<aside class="notes">
+</aside>
+</section>
+
+<section>
+
+  <h2>MyApp::Schema</h2>
+
+  <h4>Without versioning</h4>
+
+  <pre><code class="perl" data-trim contenteditable>
+
+package MyApp::Schema;
+
+use base 'DBIx::Class::Schema';
+
+our $VERSION = '0.002';
+
+__PACKAGE__->load_namespaces();
+
+1;
+
+  </code></pre>
+
+</section>
+
+<section>
+<h2>Questions?</h2>
+<h4>Peter Mottram (SysPete) &lt;peter@sysnix.com&gt;</h4>
+<aside class="notes">
+  check time remaining!
+</aside>
+</section>
