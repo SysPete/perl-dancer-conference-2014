@@ -2,7 +2,7 @@ package Test::Camel;
 
 use Test::Roo::Role;
 
-test 'test animal' => sub {
+test 'test camel' => sub {
     my $self   = shift;
     my $camel = Camel->new( humps => 1 );
 

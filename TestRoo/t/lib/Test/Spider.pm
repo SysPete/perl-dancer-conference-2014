@@ -2,7 +2,7 @@ package Test::Spider;
 
 use Test::Roo::Role;
 
-test 'test animal' => sub {
+test 'test spider' => sub {
     my $self   = shift;
     my $spider = Spider->new( is_venomous => 1 );
 
