@@ -43,6 +43,10 @@ On the internet right now, the attacker has the advantage and will for the fores
 </section>
 
 <section>
+<img src="/images/run_faster.jpg">
+</section>
+
+<section>
 <h2>Three Important Trends<br>in Information Security</h2>
 <ul>
 <li>We are losing control of our infrastructure</li>
@@ -59,10 +63,6 @@ On the internet right now, the attacker has the advantage and will for the fores
 </aside>
 </section>
 
-
-<section>
-<img src="/images/run_faster.jpg">
-</section>
 
 <section>
 <h2>Security</h2>
@@ -109,7 +109,7 @@ On the internet right now, the attacker has the advantage and will for the fores
 <aside class="notes">
 - Comprehensive, Lightweight Application Security Process<br>
 - eavesdropping, tampering, spoofing, hijacking, observing<br>
-
+- measure inputs, accessibility, collapsing not always good
 </aside>
 </section>
 
@@ -135,6 +135,16 @@ Assume the network is compromised!<br>
 </aside>
 </section>
 
+<section>
+<h2>Reducing Exposure</h2>
+<ul>
+<li>Compartmentalisation</li>
+<li>Least privilege</li>
+<li>Minimise windows of vulnerability</li>
+<li>Minimise windows of privilege</li>
+<li>Privilege separation</li>
+</ul>
+</section>
 
 <section>
 <h2>Ten Most Critical Web<br>Application Security Risks</h2>
@@ -154,17 +164,86 @@ Assume the network is compromised!<br>
 </section>
 
 <section>
-<h1></h1>
-<h2></h2>
-<ul>
-<li></li>
-</ul>
+<h2>HTTP Headers</h2>
+<table>
+ <tbody>
+<tr>
+ <td>Strict-Transport-Security: max-age=16070400; includeSubDomains</td>
+ <td>Enforces secure (HTTP over SSL/TLS) connections to server.</td>
+</tr>
+<tr>
+ <td>X-Frame-Options: deny</td>
+ <td>Provides Clickjacking protection. May need tuning if frames/iframes are in use.</td>
+</tr>
+<tr>
+ <td>X-XSS-Protection: 1; mode=block</td>
+ <td>XSS filtering by most modern browsers</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section>
+<h2>HTTP Headers</h2>
+<table>
+ <tbody>
+<tr>
+ <td>X-Content-Type-Options: nosniff </td>
+ <td>Reduces exposure to drive-by download attacks on IE & Chrome</td>
+</tr>
+<tr>
+ <td>Content-Security-Policy: default-src 'self'</td>
+ <td>Helps protect against XSS and content injection. Needs very careful tuning.</td>
+</tr>
+<tr>
+ <td>Content-Security-Policy-Report-Only: default-src 'self'; report-uri http://loghost.example.com/reports.jsp</td>
+ <td>Like Content-Security-Policy, but only reports</td>
+</tr>
+ </tbody>
+</table>
 <aside class="notes">
 </aside>
 </section>
 
 <section>
-<h1>SQL Injection</h1>
+<h2>Adding HTTP headers</h2>
+<p>nginx</p>
+<pre><code class="perl" data-trim contenteditable>
+add_header Strict-Transport-Security "max-age=16070400; includeSubDomains";
+</code></pre>
+<p>Apache</p>
+<pre><code class="perl" data-trim contenteditable>
+Header add Strict-Transport-Security "max-age=16070400;includeSubDomains"
+</code></pre>
+<p>Plack::Middleware::Headers</p>
+<pre><code class="perl" data-trim contenteditable>
+plack_middlewares:
+  -
+    - Headers
+    - set
+    - 
+      - Strict-Transport-Security
+      - "max-age=16070400;includeSubDomains"
+</code></pre>
+</section>
+
+<section>
+<h2>CSRF / XSRF</h2>
+<p>Plack::Middleware::XSRFBlock</p>
+<pre><code class="perl" data-trim contenteditable>
+    plack_middlewares:
+      - 
+        - XSRFBlock
+        - cookie_name
+        - MY-XSRF-Token
+        - cookie_options
+        -
+          httponly: 1
+</code></pre>
+<p>See also Plack::Middleware::CSRFBlock</p>
+</section>
+
+<section>
+<h2>Injection</h2>
 <br>
 <img src="http://imgs.xkcd.com/comics/exploits_of_a_mom.png">
 <br>
@@ -172,101 +251,82 @@ Assume the network is compromised!<br>
 </section>
 
 <section>
-  <h2>Crypt::PBKDF2 timings</h2>
-  <h3>16K iterations</h3>
-  <table>
-   <thead>
-    <tr><th>Characters</th><th>x1</th><th>x100</th></tr>
-   </thead>
-   <tbody>
-    <tr><td> 30    </td><td> 0.051 secs </td><td> 5.1 secs   </td></tr>
-    <tr><td> 300   </td><td> 0.073 secs </td><td> 7.3 secs   </td></tr>
-    <tr><td> 3K    </td><td> 0.206 secs </td><td> 20.6 secs  </td></tr>
-    <tr><td> 30K   </td><td> 1.386 secs </td><td> 2.22 mins  </td></tr>
-    <tr><td> 300K  </td><td> 13.38 secs </td><td> 22.3 mins  </td></tr>
-    <tr><td> 3M    </td><td> 2.22 mins  </td><td> 3.7 hours  </td></tr>
-    <tr><td> 30M   </td><td> 22.3 mins  </td><td> 37  hours  </td></tr>
-    <tr><td> 300M  </td><td> 3.7 hours  </td><td> 15 days    </td></tr>
-   </tbody>
-  </table>
-</section>
-
-<section>
-<h1></h1>
-<h2></h2>
+<h2>Injection</h2>
 <ul>
-<li></li>
+ <li>SQL & LDAP</li>
+ <li>mod_security</li>
+ <li>DBIx::Class</li>
 </ul>
-<aside class="notes">
-</aside>
 </section>
 
 <section>
-<h1></h1>
-<h2></h2>
+<h2>Escape HTML</h2>
 <ul>
-<li></li>
+ <li>protect against XSS</li>
+ <li>Dancer::Plugin::EscapeHTML</li>
 </ul>
-<aside class="notes">
-</aside>
+<pre><code class="perl" data-trim contenteditable>
+    plugins:
+        EscapeHTML:
+            automatic_escaping: 1
+            exclude_pattern: '_html$'
+</code></pre>
 </section>
 
 <section>
-<h1></h1>
-<h2></h2>
+<h2>Hide server tokens</h2>
+<p>nginx</p>
+<pre><code class="perl" data-trim contenteditable>
+server_tokens off;
+more_set_headers 'Server: Teapot v12.16.1773';
+</code></pre>
+<p>Apache</p>
+<pre><code class="perl" data-trim contenteditable>
+ServerSignature Off
+ServerTokens Prod
+</code></pre>
+<p>Dancer</p>
+<pre><code class="perl" data-trim contenteditable>
+session_name: session
+</code></pre>
+</section>
+
+<section>
+<h2>Input Validation</h2>
 <ul>
-<li></li>
+<li>Use</li>
+<li>Unit boundaries</li>
+<li>Trust boundaries</li>
+<li>Protocol parsing</li>
+<li>Application entry points</li>
+<li>Network</li>
 </ul>
-<aside class="notes">
-</aside>
 </section>
 
 <section>
-<h1></h1>
-<h2></h2>
+<h2>Input Validation</h2>
 <ul>
-<li></li>
+<li><a href="https://metacpan.org/pod/Dancer::Plugin::DataFormValidator">Dancer::Plugin::DataFormValidator</a></li>
+<li><a href="https://metacpan.org/pod/Dancer::Plugin::Form">Dancer::Plugin::Form</a></li>
+<li><a href="https://metacpan.org/pod/Dancer::Plugin::FormValidator">Dancer::Plugin::FormValidator</a></li>
+<li><a href="https://metacpan.org/pod/Dancer::Plugin::ValidateTiny">Dancer::Plugin::ValidateTiny</a></li>
+<li><a href="https://metacpan.org/pod/Dancer::Plugin::ValidationClass">Dancer::Plugin::ValidationClass</a></li>
 </ul>
-<aside class="notes">
-</aside>
 </section>
 
 <section>
-<h1></h1>
-<h2></h2>
+<h2>Other things</h2>
 <ul>
-<li></li>
+<li>Testing!!!</li>
+<li>Passord security</li>
+<li>Server security</li>
+<li>POST request limits</li>
+<li>Path traversal</li>
+<li><a href="https://metacpan.org/pod/App::Cerberus">App::Cerberus</a></li>
+<li>...</li>
 </ul>
-<aside class="notes">
-</aside>
 </section>
-
-<section>
-
-  <h2>MyApp::Schema</h2>
-
-  <h4>Without versioning</h4>
-
-  <pre><code class="perl" data-trim contenteditable>
-
-package MyApp::Schema;
-
-use base 'DBIx::Class::Schema';
-
-our $VERSION = '0.002';
-
-__PACKAGE__->load_namespaces();
-
-1;
-
-  </code></pre>
-
-</section>
-
 <section>
 <h2>Questions?</h2>
 <h4>Peter Mottram (SysPete) &lt;peter@sysnix.com&gt;</h4>
-<aside class="notes">
-  check time remaining!
-</aside>
 </section>
