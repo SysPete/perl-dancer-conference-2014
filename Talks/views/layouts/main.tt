@@ -13,11 +13,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" href="/css/reveal.min.css">
-    <link rel="stylesheet" href="/css/theme/serif.css" id="theme">
+    <link rel="stylesheet" href="/css/theme/simple.css" id="theme">
     <link rel="stylesheet" href="/css/custom.css">
 
     <!-- For syntax highlighting -->
-    <link rel="stylesheet" href="/css/zenburn.css">
+    <link rel="stylesheet" href="/css/vs.css">
 
     <!-- If the query includes 'print-pdf', include the PDF print sheet -->
     <script>
@@ -68,7 +68,7 @@
         { src: '/js/classList.js', condition: function() { return !document.body.classList; } },
         { src: '/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
         { src: '/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-        { src: '/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: '/js/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
         { src: '/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
         { src: '/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
         ]

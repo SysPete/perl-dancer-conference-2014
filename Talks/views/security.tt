@@ -4,6 +4,7 @@
     <h1>Securing your Dancer app</h1>
     <h2>keeping out the bad guys</h2>
     <h4>Peter Mottram (SysPete) &lt;peter@sysnix.com&gt;</h4>
+    <p>Perl::Dancer Conference 2014, Hancock NY, 8th October 2014</p>
 
     <aside class="notes">
     </aside>
@@ -15,9 +16,9 @@
     <h2>About me</h2>
 
     <ul>
-      <li>Lived and worked in UK, Netherlands and Malta</li>
-      <li>24 years UNIX &amp; Linux systems</li>
-      <li>freelance Linux, network security and Perl</li>
+      <li>Currently living in Malta</li>
+      <li>24 years UNIX &amp; Linux</li>
+      <li>Network security, Perl, e-commerce</li>
       <li>Interchange6 development team member</li>
     </ul>
   </section>
@@ -30,45 +31,73 @@
   </section>
 </section>
 
+
+<section>
+<h2>The Attackers are Winning</h2>
+<br>
+<blockquote cite="https://lwn.net/Articles/612435/">
+On the internet right now, the attacker has the advantage and will for the foreseeable future.
+</blockquote>
+<br>
+<p>Bruce Schneier, AppSec USA, 18th September 2014</p>
+</section>
+
+<section>
+<h2>Three Important Trends<br>in Information Security</h2>
+<ul>
+<li>We are losing control of our infrastructure</li>
+<li>Attacks are getting more sophisticated</li>
+<li>Increasing government involvement in cyberspace</li>
+</ul>
+<br><br>
+<p>Bruce Schneier, AppSec USA, 18th September 2014</p>
+<p>Source: <a href="https://lwn.net/Articles/612435/">LWN.net</a></p>
+<aside class="notes">
+- Rise of the cloud<br>
+- Target<b2>
+- not just NSA, etc. Censor, espionage, attack adversaries. Businesses & other org tend to be collateral damage.
+</aside>
+</section>
+
 <section>
  <section>
-  <h1>A short history of network<br> security</h1>
-  <h2 class="fragment">(where did it all go wrong?)</h2>
+  <h2>Network security</h2>
+  <h3 class="fragment">(where did it all go wrong?)</h3>
  </section>
  <section>
-  <h1>Early Internet</h1>
-  <h2>The Wild West</h2>
+  <h2>Early Internet</h2>
+  <h3>The Wild West</h3>
   <img class="noborder" src="/images/internet1.png">
  </section>
  <section>
-  <h1>We begin to learn</h1>
-  <h2>Stateless filtering with routers</h2>
+  <h2>We begin to learn</h2>
+  <h3>Stateless filtering with routers</h3>
   <img class="noborder" src="/images/internet2.png">
  </section>
  <section>
-  <h1>Firewalls</h1>
-  <h2>Stateful filtering</h2>
+  <h2>Firewalls</h2>
+  <h3>Stateful filtering</h3>
   <img class="noborder" src="/images/internet3.png">
  </section>
  <section>
-  <h1>DMZ</h1>
-  <h2>Starting to get fancy</h2>
+  <h2>DMZ</h2>
+  <h3>Starting to get fancy</h3>
   <img class="noborder" src="/images/internet4.png">
  </section>
  <section>
-  <h1>Paranoid</h1>
-  <h2>Multiple layers</h2>
+  <h2>Paranoid</h2>
+  <h3>Multiple layers</h3>
   <img class="noborder" src="/images/internet5.png">
  </section>
  <section>
-  <h1>The Cloud</h1>
-  <img class="noborder" src="/images/internet1.png">
+  <h2>The Cloud</h2>
+  <img class="noborder" src="/images/internet6.png">
  </section>
 </section>
 
 <section>
-<h1>Security</h1>
-<h2>Finding the right balance</h2>
+<h2>Security</h2>
+<h3>Finding the right balance</h3>
 <ul class="fragment roll-in">
 <li>Security requirements</li>
 <li>Cost versus budget</li>
@@ -80,25 +109,57 @@
 </section>
 
 <section>
-<section>
-<h1>Attackers</h1>
-<img class="fragment" src="/images/shark.jpg">
-</section>
-<section>
-<h1>Attackers</h1>
+<h2>Attackers</h2>
 <ul>
-<li>Disgruntled staff or developers</li>
-<li>"Drive by" attacks: viruses, worms, trojans</li>
-<li>Motivated criminal attackers: organised crime</li>
-<li>Criminal attackers without motive against you</li>
-<li>Script kiddies</li>
+<li class="fragment">Disgruntled staff or developers</li>
+<li class="fragment">"Drive by" attacks: viruses, worms, trojans</li>
+<li class="fragment">Motivated criminal attackers: organised crime</li>
+<li class="fragment">Criminal attackers without motive against you</li>
+<li class="fragment">Script kiddies</li>
 </ul>
 
- <aside class="notes">
+<aside class="notes">
 2 side effects or direct consequences of<br>
 4 or your organisation, defacers<br>
- </aside>
+</aside>
 </section>
+
+<section>
+<h2>OWASP CLASP<br>Security Principles</h2>
+<ul>
+<li>Ethics in Secure Software Development</li>
+<li>Insider Threats as the Weak Link</li>
+<li>Assume the Network is Compromised</li>
+<li>Minimize Attack Surface</li>
+<li>Secure by Default</li>
+<li>Defense in Depth</li>
+<li>Principles for Reducing Exposure</li>
+<li>The Insecure Bootstrapping Principle</li>
+<li>Input Validation</li>
+</ul>
+<aside class="notes">
+- Comprehensive, Lightweight Application Security Process<br>
+- eavesdropping, tampering, spoofing, hijacking, observing<br>
+
+</aside>
+</section>
+
+
+<section>
+<h2>Ten Most Critical Web<br>Application Security Risks</h2>
+<ol>
+<li>Injection</li>
+<li>Broken Authentication and Session Management</li>
+<li>Cross-Site Scripting (XSS)</li>
+<li>Insecure Direct Object References</li>
+<li>Security Misconfiguration</li>
+<li>Sensitive Data Exposure</li>
+<li>Missing Function Level Access Control</li>
+<li>Cross-Site Request Forgery (CSRF)</li>
+<li>Using Known Vulnerable Components</li>
+<li>Unvalidated Redirects and Forwards</li>
+</ol>
+<p>Source: <a href="http://owasp.org">OWASP</a></p>
 </section>
 
 <section>
@@ -126,6 +187,14 @@ Assume the network is compromised!<br>
 </ul>
 <aside class="notes">
 </aside>
+</section>
+
+<section>
+<h1>SQL Injection</h1>
+<br>
+<img src="http://imgs.xkcd.com/comics/exploits_of_a_mom.png">
+<br>
+<a href="http://xkcd.com/327/">&copy; xkcd</a>
 </section>
 
 <section>

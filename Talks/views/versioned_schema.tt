@@ -4,53 +4,47 @@
     <h2>A new versioned schema for DBIx::Class</h2>
     <h4>Peter Mottram (SysPete) &lt;peter@sysnix.com&gt;</h4>
 
+    <p>Perl::Dancer Conference 2014, Hancock NY, 9th October 2014</p>
+
     <aside class="notes">
     </aside>
 
   </section>
 
   <section>
-
     <h2>About me</h2>
-
     <ul>
-      <li>Lived and worked in UK, Netherlands and Malta</li>
-      <li>24 years UNIX &amp; Linux systems</li>
-      <li>freelance Linux, network security and Perl</li>
+      <li>Currently living in Malta</li>
+      <li>24 years UNIX &amp; Linux</li>
+      <li>Network security, Perl, e-commerce</li>
       <li>Interchange6 development team member</li>
     </ul>
   </section>
 
   <section>
   <img src="/images/mt_large_locator.gif">
-
   <p>"slightly less than twice the size of Washington, DC"</p>
   <p>&copy; CIA World Fact Book</p>
   </section>
+
 </section>
 
+<section>
+  <h2>Why version our schema?</h2>
+  <ul>
+    <li class="fragment">Deploy specific version</li>
+    <li class="fragment">Upgrades</li>
+    <li class="fragment">Downgrades</li>
+    <li class="fragment">Validation</li>
+  </ul>
 
-
-  <section>
-
-    <h2>Why version our schema?</h2>
-    <ul>
-      <li class="fragment">Deploy specific version</li>
-      <li class="fragment">Upgrades</li>
-      <li class="fragment">Downgrades</li>
-      <li class="fragment">Validation</li>
-    </ul>
-
-    <aside class="notes">
-      Deploy: easily deploy a specific schema version<br>
-      Upgrades: new tables, renamed columns, type changes, etc<br>
-      Downgrades: backout change<br>
-      Validation: does our schema match what we are expecting?
-    </aside>
-
-  </section>
-
-
+  <aside class="notes">
+    Deploy: easily deploy a specific schema version<br>
+    Upgrades: new tables, renamed columns, type changes, etc<br>
+    Downgrades: backout change<br>
+    Validation: does our schema match what we are expecting?
+  </aside>
+</section>
 
 <section>
 
@@ -416,6 +410,7 @@ sub parse_arguments {
 
 
 <section>
+<section>
 
   <h2>since with Candy</h2>
 
@@ -442,6 +437,37 @@ has_many
 
 </section>
 
+<section>
+
+  <h2>since</h2>
+
+  <pre><code class="perl" data-trim contenteditable>
+
+package MyApp::Schema::Result::Foo;
+use base 'DBIx::Class::Core';
+
+__PACKAGE__->resultset_attributes({ versioned => { since => '0.002' } });
+
+__PACKAGE__->add_columns(
+    foos_id => { data_type => 'integer', is_auto_increment => 1 },
+    name => { data_type => 'text' },
+    bar => { data_type => 'integer', versioned => { since => '0.003' } },
+);
+
+__PACKAGE__->has_many(
+    thingies => 'MyApp::Schema::Result::Thingy', foos_id,
+    { versioned => { since => '0.003' }
+);
+
+__PACKAGE__->set_primary_key('foos_id');
+
+  </code></pre>
+
+  <aside class="notes">
+  </aside>
+
+</section>
+</section>
 
 <section>
 
@@ -537,8 +563,8 @@ column bar => {
   <p>DBIx::Class::Schema::Versioned::Inline::Upgrade</p>
   <br>
 
-  <div class="fragment roll-in">
-  <h4>Exports</h4>
+  <div>
+  <h4>Keywords</h4>
   <ul>
    <li>before</li>
    <li>after</li>
