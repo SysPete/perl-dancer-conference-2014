@@ -59,40 +59,9 @@ On the internet right now, the attacker has the advantage and will for the fores
 </aside>
 </section>
 
+
 <section>
- <section>
-  <h2>Network security</h2>
-  <h3 class="fragment">(where did it all go wrong?)</h3>
- </section>
- <section>
-  <h2>Early Internet</h2>
-  <h3>The Wild West</h3>
-  <img class="noborder" src="/images/internet1.png">
- </section>
- <section>
-  <h2>We begin to learn</h2>
-  <h3>Stateless filtering with routers</h3>
-  <img class="noborder" src="/images/internet2.png">
- </section>
- <section>
-  <h2>Firewalls</h2>
-  <h3>Stateful filtering</h3>
-  <img class="noborder" src="/images/internet3.png">
- </section>
- <section>
-  <h2>DMZ</h2>
-  <h3>Starting to get fancy</h3>
-  <img class="noborder" src="/images/internet4.png">
- </section>
- <section>
-  <h2>Paranoid</h2>
-  <h3>Multiple layers</h3>
-  <img class="noborder" src="/images/internet5.png">
- </section>
- <section>
-  <h2>The Cloud</h2>
-  <img class="noborder" src="/images/internet6.png">
- </section>
+<img src="/images/run_faster.jpg">
 </section>
 
 <section>
@@ -144,22 +113,9 @@ On the internet right now, the attacker has the advantage and will for the fores
 </aside>
 </section>
 
-
 <section>
-<h2>Ten Most Critical Web<br>Application Security Risks</h2>
-<ol>
-<li>Injection</li>
-<li>Broken Authentication and Session Management</li>
-<li>Cross-Site Scripting (XSS)</li>
-<li>Insecure Direct Object References</li>
-<li>Security Misconfiguration</li>
-<li>Sensitive Data Exposure</li>
-<li>Missing Function Level Access Control</li>
-<li>Cross-Site Request Forgery (CSRF)</li>
-<li>Using Known Vulnerable Components</li>
-<li>Unvalidated Redirects and Forwards</li>
-</ol>
-<p>Source: <a href="http://owasp.org">OWASP</a></p>
+ <h2>Network security</h2>
+ <h3 class="fragment">(where did it all go wrong?)</h3>
 </section>
 
 <section>
@@ -177,6 +133,24 @@ On the internet right now, the attacker has the advantage and will for the fores
 Assume the network is compromised!<br>
 1 even with crypto might be poss: mitm  2 change data on the wire even if encrypted. Thwarted my msg auth (SSL/TLS). 3 forged from different source IP. 4 extension of spoofing - use MAC (SSL/TLS). 5 two hosts communicating, timing of traffic<br>
 </aside>
+</section>
+
+
+<section>
+<h2>Ten Most Critical Web<br>Application Security Risks</h2>
+<ol>
+<li>Injection</li>
+<li>Broken Authentication and Session Management</li>
+<li>Cross-Site Scripting (XSS)</li>
+<li>Insecure Direct Object References</li>
+<li>Security Misconfiguration</li>
+<li>Sensitive Data Exposure</li>
+<li>Missing Function Level Access Control</li>
+<li>Cross-Site Request Forgery (CSRF)</li>
+<li>Using Known Vulnerable Components</li>
+<li>Unvalidated Redirects and Forwards</li>
+</ol>
+<p>Source: <a href="http://owasp.org">OWASP</a></p>
 </section>
 
 <section>
