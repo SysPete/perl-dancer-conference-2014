@@ -322,6 +322,8 @@ session_name: session
 <li>Server security</li>
 <li>POST request limits</li>
 <li>Path traversal</li>
+<li>Logging and notification</li>
+<li>Side channel timing attacks</li>
 <li><a href="https://metacpan.org/pod/App::Cerberus">App::Cerberus</a></li>
 <li>...</li>
 </ul>
